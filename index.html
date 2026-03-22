@@ -930,9 +930,6 @@ body.light-theme .sec-title { color: #1A0810; }
 body.light-theme .gold-rule { background: linear-gradient(to right, var(--maroon), transparent); }
 body.light-theme .btn-secondary { color: #1A0810; border-color: rgba(26,8,16,0.25); }
 body.light-theme .btn-secondary:hover { border-color: var(--maroon); color: var(--maroon); }
-body.light-theme .nav-links a { color: rgba(26,8,16,0.6); }
-body.light-theme .nav-links a:hover { color: #1A0810; }
-body.light-theme .nav-links a::after { background: var(--maroon); }
 body.light-theme .about-img-frame { background: linear-gradient(145deg, var(--maroon-deep), var(--maroon)); }
 body.light-theme .about-img-frame::before { border-color: rgba(122,15,29,0.15); }
 
@@ -1185,8 +1182,6 @@ body.light-theme .theme-toggle .icon-light { display: block; }
 body.light-theme { color: #1A0810; }
 
 /* Nav */
-body.light-theme nav { background: transparent; }
-body.light-theme nav.scrolled { background: rgba(245,240,232,0.97); }
 body.light-theme .nav-logo img { filter: none; }
 
 /* Hero */
@@ -1254,9 +1249,6 @@ body.light-theme .marquee-track span { color: rgba(245,230,200,0.8); }
 body.light-theme .marquee-track span.dot { color: rgba(245,230,200,0.3); }
 
 /* Mobile drawer */
-body.light-theme .mob-drawer { background: rgba(245,240,232,0.98); }
-body.light-theme .mob-drawer a { color: #1A0810; border-bottom-color: rgba(122,15,29,0.1); }
-body.light-theme .mob-drawer a:active { color: var(--maroon); }
 
 /* Floating order btn */
 body.light-theme .nav-circ-btn { background: rgba(245,240,232,0.95); color: var(--maroon); }
@@ -1302,6 +1294,45 @@ body.light-theme .or-divider { color: rgba(26,8,16,0.25); }
 body.light-theme .or-divider::before,
 body.light-theme .or-divider::after { background: rgba(122,15,29,0.12); }
 
+
+
+body.light-theme .nav-links a { color: rgba(26,8,16,0.65); }
+
+
+/* ── Light theme nav fixes ── */
+body.light-theme nav {
+  background: rgba(245,240,232,0.97);
+  border-bottom-color: rgba(122,15,29,0.12);
+}
+body.light-theme nav.scrolled {
+  background: rgba(245,240,232,0.98);
+  border-bottom-color: rgba(122,15,29,0.2);
+}
+body.light-theme .nav-links a { color: rgba(26,8,16,0.6); }
+body.light-theme .nav-links a:hover { color: #1A0810; }
+body.light-theme .nav-links a::after { background: var(--maroon); }
+body.light-theme .hamburger span { background: var(--maroon); }
+body.light-theme .mob-drawer { background: rgba(245,240,232,0.99); }
+body.light-theme .mob-drawer a { color: #1A0810; border-bottom-color: rgba(122,15,29,0.1); }
+body.light-theme .mob-drawer a:active { color: var(--maroon); }
+
+
+/* ── Drawer close button ── */
+.mob-drawer-close {
+  position: absolute;
+  top: 1.4rem; right: 1.4rem;
+  width: 44px; height: 44px;
+  background: none; border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  transition: color .2s, transform .2s;
+}
+.mob-drawer-close:hover { color: var(--beige); transform: rotate(90deg); }
+.mob-drawer-close svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+body.light-theme .mob-drawer-close { color: var(--maroon); }
+body.light-theme .mob-drawer-close:hover { color: #1A0810; }
+
 </style>
 </head>
 <body>
@@ -1324,6 +1355,9 @@ body.light-theme .or-divider::after { background: rgba(122,15,29,0.12); }
 
 <!-- MOBILE DRAWER -->
 <div class="mob-drawer" id="mobDrawer">
+  <button class="mob-drawer-close" onclick="closeMob()" aria-label="Close menu">
+    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
   <a href="#about"           onclick="closeMob()">About</a>
   <a href="#menu"            onclick="closeMob()">Menu</a>
   <a href="#hours"           onclick="closeMob()">Hours</a>
