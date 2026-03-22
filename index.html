@@ -742,23 +742,25 @@ footer{
 ══════════════════════════════════════ */
 .float-cta{
   position:fixed;bottom:2rem;right:2rem;z-index:800;
-  display:flex;align-items:center;gap:0.55rem;
-  background:var(--gold);color:var(--black);
-  font-family:var(--sans);font-size:0.68rem;font-weight:600;
-  letter-spacing:0.14em;text-transform:uppercase;
-  padding:13px 24px;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:90px;height:90px;
   text-decoration:none;
-  box-shadow:0 6px 28px rgba(212,175,55,0.4);
-  transition:background .2s,box-shadow .2s,transform .2s;
   animation:floatPulse 3.5s ease-in-out infinite;
 }
-.float-cta svg{width:14px;height:14px;fill:var(--black);}
-.float-cta:hover{
-  animation:none;
-  background:var(--gold-light);
-  transform:translateY(-3px);
-  box-shadow:0 12px 36px rgba(212,175,55,0.5);
-}
+.float-cta:hover{ animation:none; }
+/* Orbit rings reuse nav-circle styles — just scale up */
+.float-cta .nav-orbit-outer{ width:90px;height:90px; }
+.float-cta .nav-orbit-inner{ width:74px;height:74px; }
+.float-cta .nav-orbit-outer .nav-od1,.float-cta .nav-orbit-outer .nav-od3,
+.float-cta .nav-orbit-outer .nav-od5,.float-cta .nav-orbit-outer .nav-od7{ width:6px;height:6px; }
+.float-cta .nav-orbit-outer .nav-od2,.float-cta .nav-orbit-outer .nav-od4,
+.float-cta .nav-orbit-outer .nav-od6,.float-cta .nav-orbit-outer .nav-od8{ width:4px;height:4px; }
+.float-cta .nav-orbit-inner .nav-od1,.float-cta .nav-orbit-inner .nav-od3,
+.float-cta .nav-orbit-inner .nav-od5,.float-cta .nav-orbit-inner .nav-od7{ width:5px;height:5px; }
+.float-cta .nav-border-ring{ width:64px;height:64px;padding:2.5px; }
+.float-cta .nav-circ-btn .cn-order{ font-size:8px; }
+.float-cta .nav-circ-btn .cn-now  { font-size:8px; }
+
 @keyframes floatPulse{
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-5px);}
@@ -791,6 +793,73 @@ footer{
   .spec-grid{grid-template-columns:1fr;}
   .hero-logo-img{height:72px;}
 }
+
+/* ══ ORDER NOW — Circle Button v2 ══ */
+@keyframes orbitSpin  { 0%{transform:rotate(0deg)}  100%{transform:rotate(360deg)} }
+@keyframes orbitSpinR { 0%{transform:rotate(0deg)}  100%{transform:rotate(-360deg)} }
+@keyframes borderOrbit{ 0%{background-position:0% 50%} 100%{background-position:400% 50%} }
+
+.nav-circle-wrap{
+  position:relative;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:80px;height:80px;
+  cursor:pointer;
+}
+.nav-orbit{
+  position:absolute;border-radius:50%;pointer-events:none;
+}
+.nav-orbit-outer{
+  width:80px;height:80px;
+  animation:orbitSpin 6s linear infinite;
+}
+.nav-orbit-inner{
+  width:66px;height:66px;
+  animation:orbitSpinR 4s linear infinite;
+}
+.nav-od{position:absolute;border-radius:50%;}
+.nav-od1,.nav-od3,.nav-od5,.nav-od7{width:5px;height:5px;}
+.nav-od2,.nav-od4,.nav-od6,.nav-od8{width:3px;height:3px;}
+.nav-orbit-outer .nav-od1,.nav-orbit-outer .nav-od3,
+.nav-orbit-outer .nav-od5,.nav-orbit-outer .nav-od7{background:#D4AF37;}
+.nav-orbit-outer .nav-od2,.nav-orbit-outer .nav-od4,
+.nav-orbit-outer .nav-od6,.nav-orbit-outer .nav-od8{background:#7A0F1D;}
+.nav-orbit-inner .nav-od1,.nav-orbit-inner .nav-od3,
+.nav-orbit-inner .nav-od5,.nav-orbit-inner .nav-od7{background:#E8CB6A;width:4px;height:4px;}
+.nav-orbit-inner .nav-od2,.nav-orbit-inner .nav-od4,
+.nav-orbit-inner .nav-od6,.nav-orbit-inner .nav-od8{background:#560B15;width:3px;height:3px;}
+.nav-od1{top:0%;   left:50%; transform:translate(-50%,-50%);}
+.nav-od2{top:14.6%;left:85.4%;transform:translate(-50%,-50%);}
+.nav-od3{top:50%;  left:100%;transform:translate(-50%,-50%);}
+.nav-od4{top:85.4%;left:85.4%;transform:translate(-50%,-50%);}
+.nav-od5{top:100%; left:50%; transform:translate(-50%,-50%);}
+.nav-od6{top:85.4%;left:14.6%;transform:translate(-50%,-50%);}
+.nav-od7{top:50%;  left:0%;  transform:translate(-50%,-50%);}
+.nav-od8{top:14.6%;left:14.6%;transform:translate(-50%,-50%);}
+
+.nav-border-ring{
+  position:absolute;width:56px;height:56px;border-radius:50%;
+  padding:2px;
+  background:linear-gradient(90deg,#D4AF37,#7A0F1D,#E8CB6A,#560B15,#D4AF37,#7A0F1D,#D4AF37);
+  background-size:400%;
+  animation:borderOrbit 3s linear infinite;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-circ-btn{
+  width:100%;height:100%;border-radius:50%;
+  background:#1A0810;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#D4AF37;
+  font-family:var(--sans);font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  transition:background .35s,color .35s;
+  gap:1px;
+  text-decoration:none;
+}
+.nav-circ-btn:hover{background:#D4AF37;color:#121212;}
+.nav-circ-btn .cn-order{font-size:7px;letter-spacing:0.18em;}
+.nav-circ-btn .cn-now  {font-size:7px;letter-spacing:0.22em;}
+
+
 </style>
 </head>
 <body>
@@ -804,7 +873,29 @@ footer{
     <li><a href="#hours">Hours</a></li>
     <li><a href="catering.html">Catering</a></li>
     <li><a href="promotions.html">Promotions</a></li>
-    <li><a class="nav-order" href="https://www.toasttab.com/biryanipot-brentwood" target="_blank">Order Now</a></li>
+    <li>
+      <div class="nav-circle-wrap">
+        <div class="nav-orbit nav-orbit-outer">
+          <div class="nav-od nav-od1"></div><div class="nav-od nav-od2"></div>
+          <div class="nav-od nav-od3"></div><div class="nav-od nav-od4"></div>
+          <div class="nav-od nav-od5"></div><div class="nav-od nav-od6"></div>
+          <div class="nav-od nav-od7"></div><div class="nav-od nav-od8"></div>
+        </div>
+        <div class="nav-orbit nav-orbit-inner">
+          <div class="nav-od nav-od1"></div><div class="nav-od nav-od2"></div>
+          <div class="nav-od nav-od3"></div><div class="nav-od nav-od4"></div>
+          <div class="nav-od nav-od5"></div><div class="nav-od nav-od6"></div>
+          <div class="nav-od nav-od7"></div><div class="nav-od nav-od8"></div>
+        </div>
+        <div class="nav-border-ring">
+          <a class="nav-circ-btn" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">
+            <span class="cn-order">Order</span>
+            <span class="cn-now">Now</span>
+            
+          </a>
+        </div>
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -823,7 +914,7 @@ footer{
       Authentic Hyderabadi &amp; Vijayawada cuisine, crafted fresh daily in the heart of Brentwood.
     </p>
     <div class="hero-actions">
-      <a class="btn-primary" href="https://www.toasttab.com/biryanipot-brentwood" target="_blank">
+      <a class="btn-primary" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 16.1 6.1 17 7.2 17H19v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63H15.5c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
         Order Online
       </a>
@@ -1073,7 +1164,7 @@ footer{
     </div>
   </div>
   <div class="menu-cta">
-    <a class="btn-primary" href="https://www.toasttab.com/biryanipot-brentwood" target="_blank">View Full Menu &amp; Order Online</a>
+    <a class="btn-primary" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">View Full Menu &amp; Order Online</a>
   </div>
 </section>
 
@@ -1083,7 +1174,7 @@ footer{
   <!-- LEFT: Google Map -->
   <div class="location-map">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0!2d-121.7154!3d37.9316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808561c3e3b1f0e9%3A0x1!2s3130+Balfour+Rd+Suite+E%2C+Brentwood%2C+CA+94513!5e0!3m2!1sen!2sus!4v1700000000000"
+      src="https://maps.google.com/maps?q=3130+Balfour+Road+Suite+E,+Brentwood,+CA+94513&output=embed&z=16"
       allowfullscreen=""
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
@@ -1108,7 +1199,7 @@ footer{
           <a href="mailto:biryanipot.brentwood@gmail.com">biryanipot.brentwood@gmail.com</a><br>
           Free parking in complex
         </p>
-        <a class="loc-directions" href="https://maps.google.com/?q=3130+Balfour+Road+Suite+E+Brentwood+CA+94513" target="_blank">
+        <a class="loc-directions" href="https://share.google/i60mZoEPZxcXNF3M3" target="_blank">
           Get Directions
           <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
         </a>
@@ -1117,15 +1208,15 @@ footer{
       <!-- Order Online -->
       <div class="loc-order">
         <div class="loc-order-title">Order Online</div>
-        <a class="order-main-btn" href="https://www.toasttab.com/biryanipot-brentwood" target="_blank">
+        <a class="order-main-btn" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">
           <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 16.1 6.1 17 7.2 17H19v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63H15.5c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
           Order on Toast
         </a>
         <div class="or-divider">Also on</div>
         <div class="delivery-row">
-          <a class="delivery-btn" href="https://www.doordash.com" target="_blank">DoorDash</a>
-          <a class="delivery-btn" href="https://www.ubereats.com" target="_blank">Uber Eats</a>
-          <a class="delivery-btn" href="https://www.chownow.com" target="_blank">ChowNow</a>
+          <a class="delivery-btn" href="https://www.doordash.com/store/32129185?utm_source=mx_share&aw=E0bfBi-cUMAL4YAX" target="_blank">DoorDash</a>
+          <a class="delivery-btn" href="https://www.ubereats.com/store-browse-uuid/f2e06469-d7c0-4b18-9dc2-c610e9722832?diningMode=DELIVERY" target="_blank">Uber Eats</a>
+          <a class="delivery-btn" href="https://direct.chownow.com/order/41750/locations" target="_blank">ChowNow</a>
         </div>
       </div>
 
@@ -1137,19 +1228,19 @@ footer{
       <div class="hours-grid" id="hoursTable">
         <div class="hours-row" data-day="Monday">
           <span class="hours-day">Monday</span>
-          <span class="hours-time">11:30 AM – 2:30 PM<br>4:30 – 9:00 PM</span>
+          <span class="hours-time">11:30 AM – 3:00 PM<br>5:00 PM – 9:00 PM</span>
         </div>
         <div class="hours-row" data-day="Tuesday">
           <span class="hours-day">Tuesday</span>
-          <span class="hours-time">11:30 AM – 2:30 PM<br>4:30 – 9:00 PM</span>
+          <span class="hours-time">11:30 AM – 3:00 PM<br>5:00 PM – 9:00 PM</span>
         </div>
         <div class="hours-row" data-day="Wednesday">
           <span class="hours-day">Wednesday</span>
-          <span class="hours-time">11:30 AM – 9:00 PM</span>
+          <span class="hours-time">11:30 AM – 3:00 PM<br>5:00 PM – 9:00 PM</span>
         </div>
         <div class="hours-row" data-day="Thursday">
           <span class="hours-day">Thursday</span>
-          <span class="hours-time">11:30 AM – 9:00 PM</span>
+          <span class="hours-time">11:30 AM – 3:00 PM<br>5:00 PM – 9:00 PM</span>
         </div>
         <div class="hours-row" data-day="Friday">
           <span class="hours-day">Friday</span>
@@ -1161,7 +1252,7 @@ footer{
         </div>
         <div class="hours-row" data-day="Sunday">
           <span class="hours-day">Sunday</span>
-          <span class="hours-time">11:30 AM – 9:00 PM</span>
+          <span class="hours-time">11:30 AM – 3:00 PM<br>5:00 PM – 9:00 PM</span>
         </div>
       </div>
     </div>
@@ -1201,7 +1292,7 @@ footer{
         <li><a href="#menu">Menu</a></li>
         <li><a href="#hours">Hours</a></li>
         <li><a href="#catering">Catering</a></li>
-        <li><a href="https://www.toasttab.com/biryanipot-brentwood" target="_blank">Order Online</a></li>
+        <li><a href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">Order Online</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1219,10 +1310,27 @@ footer{
 </footer>
 
 <!-- ══ FLOATING CTA ══ -->
-<a class="float-cta" href="https://www.toasttab.com/biryanipot-brentwood" target="_blank">
-  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 16.1 6.1 17 7.2 17H19v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63H15.5c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-  Order Now
-</a>
+<div class="float-cta">
+  <div class="nav-orbit nav-orbit-outer">
+    <div class="nav-od nav-od1"></div><div class="nav-od nav-od2"></div>
+    <div class="nav-od nav-od3"></div><div class="nav-od nav-od4"></div>
+    <div class="nav-od nav-od5"></div><div class="nav-od nav-od6"></div>
+    <div class="nav-od nav-od7"></div><div class="nav-od nav-od8"></div>
+  </div>
+  <div class="nav-orbit nav-orbit-inner">
+    <div class="nav-od nav-od1"></div><div class="nav-od nav-od2"></div>
+    <div class="nav-od nav-od3"></div><div class="nav-od nav-od4"></div>
+    <div class="nav-od nav-od5"></div><div class="nav-od nav-od6"></div>
+    <div class="nav-od nav-od7"></div><div class="nav-od nav-od8"></div>
+  </div>
+  <div class="nav-border-ring">
+    <a class="nav-circ-btn" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">
+      <span class="cn-order">Order</span>
+      <span class="cn-now">Now</span>
+      
+    </a>
+  </div>
+</div>
 
 <script>
 // Nav scroll
