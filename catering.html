@@ -40,7 +40,7 @@
   nav {
   position:fixed;top:0;left:0;right:0;z-index:900;
   padding:0 5%;
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;position:relative;
   height:80px;
   transition:height .4s ease, background .4s ease, border-color .4s ease;
   border-bottom:1px solid transparent;
@@ -56,7 +56,29 @@
   display:block;
   transition:height .3s ease;
 }
-  nav.scrolled .nav-logo img{height:40px;}
+  nav.scrolled .nav-logo img{height:36px;}
+.nav-logo-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.nav-logo-sub{
+  font-family:var(--sans);
+  font-size:0.62rem;font-weight:400;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(212,175,55,0.85);
+  line-height:1;
+  white-space:nowrap;
+  transition:opacity .3s;
+}
+nav.scrolled .nav-logo-sub{ opacity:0; height:0; overflow:hidden; }
+body.light-theme .nav-logo-sub{ color:rgba(122,15,29,0.5); }
+
+/* Logo absolutely centered */
+.nav-logo{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;
+  text-decoration:none;
+}
+
   .nav-links{display:flex;align-items:center;gap:2.8rem;list-style:none;}
   .nav-links a{
   font-family:var(--sans);
@@ -195,6 +217,7 @@
   @media(max-width:900px){
     .footer-grid{grid-template-columns:1fr 1fr;gap:3rem;}
     .nav-links{display:none;}
+  .nav-order{display:none !important;}
   }
   @media(max-width:600px){.footer-grid{grid-template-columns:1fr;}}
 
@@ -357,8 +380,28 @@
 }
 
 /* ══ MOBILE NAV ══ */
-.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;padding:6px;background:none;border:none;z-index:1001;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s ease;}
+.hamburger{
+  display:none;
+  -webkit-tap-highlight-color:transparent;
+  -moz-appearance:none;
+  flex-direction:column;justify-content:center;gap:5px;
+  cursor:pointer;
+  padding:6px;
+  background:transparent !important;
+  border:none !important;
+  outline:none !important;
+  -webkit-appearance:none;
+  appearance:none;
+  z-index:1001;
+  width:36px;
+  box-shadow:none !important;
+}
+.hamburger span{
+  display:block;width:22px;height:2px;
+  background:var(--gold);border-radius:2px;
+  transition:all .3s ease;
+  flex-shrink:0;
+}
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
 .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
@@ -373,7 +416,13 @@
   nav{height:64px !important;padding:0 5% !important;}
   nav.scrolled{height:56px !important;}
   .nav-logo img{height:36px !important;}
+  .nav-hamburger-wrap{display:block;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
   .nav-links{display:none !important;}
+  .nav-order{display:none !important;}
   .hamburger{display:flex;}
 
   /* Hero */
@@ -524,6 +573,8 @@ body.light-theme .theme-toggle .icon-light { display: block; }
 /* Hamburger */
 .hamburger{
   display:none;
+  -webkit-tap-highlight-color:transparent;
+  -moz-appearance:none;
   flex-direction:column;justify-content:center;gap:5px;
   cursor:pointer;padding:6px;background:none;border:none;z-index:1001;
 }
@@ -574,7 +625,13 @@ body.light-theme .theme-toggle .icon-light { display: block; }
   nav{height:64px !important;padding:0 5% !important;}
   nav.scrolled{height:56px !important;}
   .nav-logo img{height:36px !important;}
+  .nav-hamburger-wrap{display:block;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
   .nav-links{display:none !important;}
+  .nav-order{display:none !important;}
   .hamburger{display:flex;}
 
   /* HERO — stack photo on top, content below */
@@ -707,11 +764,6 @@ body.light-theme .theme-toggle .icon-light { display: block; }
   .footer-brand p{max-width:100% !important;}
 
   /* FLOAT + THEME */
-  .float-cta{bottom:1.2rem !important;right:1.2rem !important;width:76px !important;height:76px !important;}
-  .float-cta .nav-orbit-outer{width:76px !important;height:76px !important;}
-  .float-cta .nav-orbit-inner{width:62px !important;height:62px !important;}
-  .float-cta .nav-border-ring{width:52px !important;height:52px !important;}
-  .theme-toggle{bottom:1.2rem !important;left:1.2rem !important;width:40px !important;height:40px !important;}
 
   /* GENERAL */
   .sec-title{font-size:clamp(1.8rem,6vw,2.6rem) !important;line-height:1.1 !important;}
@@ -944,6 +996,7 @@ body.light-theme nav.scrolled {
   background: rgba(245,240,232,0.98);
   border-bottom-color: rgba(122,15,29,0.2);
 }
+body.light-theme .nav-top { border-bottom-color: rgba(122,15,29,0.08); }
 body.light-theme .nav-links a { color: rgba(26,8,16,0.6); }
 body.light-theme .nav-links a:hover { color: #1A0810; }
 body.light-theme .nav-links a::after { background: var(--maroon); }
@@ -969,6 +1022,21 @@ body.light-theme .mob-drawer a:active { color: var(--maroon); }
 body.light-theme .mob-drawer-close { color: var(--maroon); }
 body.light-theme .mob-drawer-close:hover { color: #1A0810; }
 
+
+/* Float CTA — always bottom right, never overlaps text */
+@media(max-width:768px){
+  .float-cta{
+    bottom:1.5rem !important;
+    right:1rem !important;
+    width:70px !important;
+    height:70px !important;
+    opacity:0.92;
+  }
+  .float-cta .nav-orbit-outer{width:70px !important;height:70px !important;}
+  .float-cta .nav-orbit-inner{width:58px !important;height:58px !important;}
+  .float-cta .nav-border-ring{width:48px !important;height:48px !important;}
+}
+
 </style>
 </head>
 <body>
@@ -976,10 +1044,13 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
 
 <nav id="nav">
   <a class="nav-logo" href="index.html" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
-    <img src="Biryani_pot_Logo.png" alt="Biryani Pot Brentwood">
+    <div class="nav-logo-wrap">
+      <img src="Biryani_pot_Logo.png" alt="Biryani Pot Brentwood" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="logo-fallback" style="display:none;font-family:var(--serif);font-size:1.3rem;color:var(--gold);letter-spacing:0.05em;">Biryani Pot</span>
+      <span class="nav-logo-sub">Brentwood</span>
+    </div>
   </a>
-  <button class="hamburger" id="burger" onclick="toggleMob()" aria-label="Menu"><span></span><span></span><span></span></button>
-  <ul class="nav-links">
+    <ul class="nav-links">
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#menu">Menu</a></li>
     <li><a href="index.html#hours">Hours</a></li>
@@ -987,6 +1058,9 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     <li><a href="promotions.html" id="nav-promos">Promotions</a></li>
     <li><a class="nav-order" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">Order Now</a></li>
   </ul>
+  <button class="hamburger" id="burger" onclick="toggleMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- MOBILE DRAWER -->
@@ -1115,27 +1189,6 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
   </div>
 </section>
 
-<!-- MENU HIGHLIGHT -->
-<section class="catering-menu" id="menu-highlight">
-  <div class="eyebrow">Catering Menu</div>
-  <h2 class="sec-title">Popular <em>Crowd Favourites</em></h2>
-  <div class="gold-rule"></div>
-  <div class="catering-menu-grid">
-    <div class="cmenu-item"><div class="cmenu-name">Hyderabadi Chicken Dum Biryani</div><div class="cmenu-desc">Slow-cooked in sealed handi — saffron, caramelized onions, whole spices</div><span class="cmenu-tag">Signature</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Vijayawada Mutton Biryani</div><div class="cmenu-desc">Bold Andhra masala, tender mutton, aromatic long-grain rice</div><span class="cmenu-tag">Spicy</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Paneer Biryani</div><div class="cmenu-desc">Creamy cottage cheese, Hyderabadi spiced basmati</div><span class="cmenu-tag">Vegetarian</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Veg Dum Biryani</div><div class="cmenu-desc">Garden-fresh vegetables, whole spices, aromatic basmati</div><span class="cmenu-tag">Vegetarian</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Butter Chicken</div><div class="cmenu-desc">Tandoor-charred chicken in velvety tomato-cream gravy</div><span class="cmenu-tag">Best Seller</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Paneer Butter Masala</div><div class="cmenu-desc">Cottage cheese in tomato-cashew gravy</div><span class="cmenu-tag">Vegetarian</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Chicken Tikka</div><div class="cmenu-desc">Tandoor-grilled, spiced yogurt marinade, mint chutney</div></div>
-    <div class="cmenu-item"><div class="cmenu-name">Gobi Manchurian</div><div class="cmenu-desc">Crispy cauliflower in Indo-Chinese manchurian sauce</div><span class="cmenu-tag">Vegetarian</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Garlic Naan</div><div class="cmenu-desc">Fluffy tandoor-baked flatbread with roasted garlic butter</div></div>
-    <div class="cmenu-item"><div class="cmenu-name">Gulab Jamun</div><div class="cmenu-desc">Warm milk-solid dumplings in rose-cardamom syrup</div><span class="cmenu-tag">Dessert</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Mango Lassi</div><div class="cmenu-desc">Chilled yogurt blended with sweet Alphonso mango</div><span class="cmenu-tag">Beverage</span></div>
-    <div class="cmenu-item"><div class="cmenu-name">Custom Package</div><div class="cmenu-desc">Build your own menu from our full offerings — contact us to discuss</div><span class="cmenu-tag">Tailored</span></div>
-  </div>
-</section>
-
 <!-- INQUIRY FORM -->
 <section class="inquiry-section" id="inquiry">
   <div class="inquiry-inner">
@@ -1150,6 +1203,10 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
           <div class="ic-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
           <div class="ic-val"><a href="mailto:biryanipot.brentwood@gmail.com">biryanipot.brentwood@gmail.com</a></div>
         </div>
+        <div class="ic-row">
+          <div class="ic-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.21 2.2z"/></svg></div>
+          <div class="ic-val"><a href="tel:+19253928272">(925) 392-8272</a></div>
+        </div>
         <div class="ic-item">
           <div class="ic-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
           <div class="ic-val">3130 Balfour Road, Suite E<br>Brentwood, CA 94513</div>
@@ -1158,31 +1215,36 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     </div>
 
     <div class="catering-form">
-      <form id="cateringForm" onsubmit="submitForm(event)">
+      <form id="cateringForm" action="https://formspree.io/f/mgopvkgz" method="POST" onsubmit="submitForm(event)">
+        <!-- Formspree: send to biryanipot.brentwood@gmail.com -->
+        <input type="hidden" name="_replyto" value="biryanipot.brentwood@gmail.com">
+        <input type="hidden" name="_subject" value="🍛 New Catering Request — Biryani Pot Brentwood">
+        <input type="hidden" name="_next" value="">
+
         <div class="form-row">
           <div class="form-group">
             <label>First Name *</label>
-            <input type="text" placeholder="First name" required>
+            <input type="text" name="First Name" placeholder="First name" required>
           </div>
           <div class="form-group">
             <label>Last Name *</label>
-            <input type="text" placeholder="Last name" required>
+            <input type="text" name="Last Name" placeholder="Last name" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Email Address *</label>
-            <input type="email" placeholder="your@email.com" required>
+            <input type="email" name="Email" placeholder="your@email.com" required>
           </div>
           <div class="form-group">
             <label>Phone Number</label>
-            <input type="tel" placeholder="(925) 000-0000">
+            <input type="tel" name="Phone" placeholder="(925) 000-0000">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Event Type *</label>
-            <select required>
+            <select name="Event Type" required>
               <option value="" disabled selected>Select event type</option>
               <option>Wedding / Reception</option>
               <option>Birthday Party</option>
@@ -1194,7 +1256,7 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
           </div>
           <div class="form-group">
             <label>Expected Guest Count *</label>
-            <select required>
+            <select name="Guest Count" required>
               <option value="" disabled selected>Select range</option>
               <option>Under 25</option>
               <option>25 – 50</option>
@@ -1208,16 +1270,16 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
         <div class="form-row">
           <div class="form-group">
             <label>Event Date *</label>
-            <input type="date" required>
+            <input type="date" name="Event Date" required>
           </div>
           <div class="form-group">
             <label>Event Location / City</label>
-            <input type="text" placeholder="Brentwood, CA">
+            <input type="text" name="Event Location" placeholder="Brentwood, CA">
           </div>
         </div>
         <div class="form-group">
           <label>Menu Preferences / Special Requests</label>
-          <textarea placeholder="Tell us about the dishes you'd like, dietary requirements, spice preferences, or any other details..."></textarea>
+          <textarea name="Message" placeholder="Tell us about the dishes you'd like, dietary requirements, spice preferences, or any other details..."></textarea>
         </div>
         <button type="submit" class="form-submit">Submit Catering Request</button>
         <div class="form-note">We'll respond within 24 hours with a custom quote and menu proposal.</div>
@@ -1232,7 +1294,7 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
   <div class="footer-grid">
     <div class="footer-brand">
       <img src="Biryani_pot_Logo.png" alt="Biryani Pot">
-      <p>Authentic Hyderabadi &amp; Vijayawada biryani, slow-cooked with devotion and served fresh daily in Brentwood, California.</p>
+      <p>Authentic Hyderabadi &amp; Vijayawada biryani, slow-cooked with devotion and served fresh daily in Brentwood.</p>
     </div>
     <div class="footer-col">
       <h4>Navigate</h4>
@@ -1247,7 +1309,7 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     </div>
     <div class="footer-col">
       <h4>Visit Us</h4>
-      <p>3130 Balfour Road, Suite E<br>Brentwood, CA 94513<br><br>Open 7 days a week<br>11:30 AM onwards<br><br><a href="mailto:biryanipot.brentwood@gmail.com">biryanipot.brentwood@gmail.com</a></p>
+      <p>3130 Balfour Road, Suite E<br>Brentwood, CA 94513<br><br>Open 7 days a week<br>11:30 AM onwards<br><br><a href="mailto:biryanipot.brentwood@gmail.com">biryanipot.brentwood@gmail.com</a><br><a href="tel:+19253928272">(925) 392-8272</a></p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1272,12 +1334,38 @@ if(p.includes('promo'))document.getElementById('nav-promos')&&document.getElemen
 <script>
 function submitForm(e){
   e.preventDefault();
+  const form = e.target;
+  const btn  = form.querySelector('.form-submit');
   const toast = document.getElementById('formToast');
-  toast.style.display = 'block';
-  e.target.querySelector('.form-submit').textContent = 'Request Sent ✦';
-  e.target.querySelector('.form-submit').style.background = 'rgba(212,175,55,0.3)';
-  e.target.querySelector('.form-submit').disabled = true;
-  toast.scrollIntoView({behavior:'smooth',block:'nearest'});
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const data = new FormData(form);
+
+  fetch('https://formspree.io/f/mgopvkgz', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(res => {
+    if(res.ok){
+      btn.textContent = 'Request Sent ✦';
+      btn.style.background = 'rgba(212,175,55,0.3)';
+      toast.style.display = 'block';
+      toast.scrollIntoView({behavior:'smooth', block:'nearest'});
+      form.reset();
+    } else {
+      btn.textContent = 'Submit Catering Request';
+      btn.disabled = false;
+      alert('Something went wrong. Please email us directly at biryanipot.brentwood@gmail.com');
+    }
+  })
+  .catch(() => {
+    btn.textContent = 'Submit Catering Request';
+    btn.disabled = false;
+    alert('Network error. Please email us at biryanipot.brentwood@gmail.com');
+  });
 }
 const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
