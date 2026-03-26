@@ -33,7 +33,7 @@
   nav {
   position:fixed;top:0;left:0;right:0;z-index:900;
   padding:0 5%;
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;position:relative;
   height:80px;
   transition:height .4s ease, background .4s ease, border-color .4s ease;
   border-bottom:1px solid transparent;
@@ -48,7 +48,29 @@
   height:48px;width:auto;
   display:block;
   transition:height .3s ease;
-}nav.scrolled .nav-logo img{height:40px;}
+}nav.scrolled .nav-logo img{height:36px;}
+.nav-logo-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.nav-logo-sub{
+  font-family:var(--sans);
+  font-size:0.62rem;font-weight:400;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(212,175,55,0.85);
+  line-height:1;
+  white-space:nowrap;
+  transition:opacity .3s;
+}
+nav.scrolled .nav-logo-sub{ opacity:0; height:0; overflow:hidden; }
+body.light-theme .nav-logo-sub{ color:rgba(122,15,29,0.5); }
+
+/* Logo absolutely centered */
+.nav-logo{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;
+  text-decoration:none;
+}
+
   .nav-links{display:flex;align-items:center;gap:2.8rem;list-style:none;}
   .nav-links a{
   font-family:var(--sans);
@@ -150,7 +172,8 @@
   transition:border-color .2s,color .2s;
 }
   .btn-secondary:hover{border-color:var(--gold);color:var(--gold);}
-  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:3rem;}.nav-links{display:none;}}
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:3rem;}.nav-links{display:none;}
+  .nav-order{display:none !important;}}
   @media(max-width:600px){.footer-grid{grid-template-columns:1fr;}}
 
 
@@ -333,8 +356,28 @@
 }
 
 /* ══ MOBILE NAV ══ */
-.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;padding:6px;background:none;border:none;z-index:1001;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s ease;}
+.hamburger{
+  display:none;
+  -webkit-tap-highlight-color:transparent;
+  -moz-appearance:none;
+  flex-direction:column;justify-content:center;gap:5px;
+  cursor:pointer;
+  padding:6px;
+  background:transparent !important;
+  border:none !important;
+  outline:none !important;
+  -webkit-appearance:none;
+  appearance:none;
+  z-index:1001;
+  width:36px;
+  box-shadow:none !important;
+}
+.hamburger span{
+  display:block;width:22px;height:2px;
+  background:var(--gold);border-radius:2px;
+  transition:all .3s ease;
+  flex-shrink:0;
+}
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
 .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
@@ -349,7 +392,13 @@
   nav{height:64px !important;padding:0 5% !important;}
   nav.scrolled{height:56px !important;}
   .nav-logo img{height:36px !important;}
+  .nav-hamburger-wrap{display:block;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
   .nav-links{display:none !important;}
+  .nav-order{display:none !important;}
   .hamburger{display:flex;}
 
   /* Hero */
@@ -499,6 +548,8 @@ body.light-theme .theme-toggle .icon-light { display: block; }
 /* Hamburger */
 .hamburger{
   display:none;
+  -webkit-tap-highlight-color:transparent;
+  -moz-appearance:none;
   flex-direction:column;justify-content:center;gap:5px;
   cursor:pointer;padding:6px;background:none;border:none;z-index:1001;
 }
@@ -549,7 +600,13 @@ body.light-theme .theme-toggle .icon-light { display: block; }
   nav{height:64px !important;padding:0 5% !important;}
   nav.scrolled{height:56px !important;}
   .nav-logo img{height:36px !important;}
+  .nav-hamburger-wrap{display:block;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
   .nav-links{display:none !important;}
+  .nav-order{display:none !important;}
   .hamburger{display:flex;}
 
   /* HERO — stack photo on top, content below */
@@ -682,11 +739,6 @@ body.light-theme .theme-toggle .icon-light { display: block; }
   .footer-brand p{max-width:100% !important;}
 
   /* FLOAT + THEME */
-  .float-cta{bottom:1.2rem !important;right:1.2rem !important;width:76px !important;height:76px !important;}
-  .float-cta .nav-orbit-outer{width:76px !important;height:76px !important;}
-  .float-cta .nav-orbit-inner{width:62px !important;height:62px !important;}
-  .float-cta .nav-border-ring{width:52px !important;height:52px !important;}
-  .theme-toggle{bottom:1.2rem !important;left:1.2rem !important;width:40px !important;height:40px !important;}
 
   /* GENERAL */
   .sec-title{font-size:clamp(1.8rem,6vw,2.6rem) !important;line-height:1.1 !important;}
@@ -920,6 +972,7 @@ body.light-theme nav.scrolled {
   background: rgba(245,240,232,0.98);
   border-bottom-color: rgba(122,15,29,0.2);
 }
+body.light-theme .nav-top { border-bottom-color: rgba(122,15,29,0.08); }
 body.light-theme .nav-links a { color: rgba(26,8,16,0.6); }
 body.light-theme .nav-links a:hover { color: #1A0810; }
 body.light-theme .nav-links a::after { background: var(--maroon); }
@@ -945,6 +998,21 @@ body.light-theme .mob-drawer a:active { color: var(--maroon); }
 body.light-theme .mob-drawer-close { color: var(--maroon); }
 body.light-theme .mob-drawer-close:hover { color: #1A0810; }
 
+
+/* Float CTA — always bottom right, never overlaps text */
+@media(max-width:768px){
+  .float-cta{
+    bottom:1.5rem !important;
+    right:1rem !important;
+    width:70px !important;
+    height:70px !important;
+    opacity:0.92;
+  }
+  .float-cta .nav-orbit-outer{width:70px !important;height:70px !important;}
+  .float-cta .nav-orbit-inner{width:58px !important;height:58px !important;}
+  .float-cta .nav-border-ring{width:48px !important;height:48px !important;}
+}
+
 </style>
 </head>
 <body>
@@ -952,10 +1020,13 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
 
 <nav id="nav">
   <a class="nav-logo" href="index.html">
-    <img src="Biryani_pot_Logo.png" alt="Biryani Pot Brentwood">
+    <div class="nav-logo-wrap">
+      <img src="Biryani_pot_Logo.png" alt="Biryani Pot Brentwood" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="logo-fallback" style="display:none;font-family:var(--serif);font-size:1.3rem;color:var(--gold);letter-spacing:0.05em;">Biryani Pot</span>
+      <span class="nav-logo-sub">Brentwood</span>
+    </div>
   </a>
-  <button class="hamburger" id="burger" onclick="toggleMob()" aria-label="Menu"><span></span><span></span><span></span></button>
-  <ul class="nav-links">
+    <ul class="nav-links">
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#menu">Menu</a></li>
     <li><a href="index.html#hours">Hours</a></li>
@@ -963,6 +1034,9 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     <li><a href="promotions.html" id="nav-promos">Promotions</a></li>
     <li><a class="nav-order" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">Order Now</a></li>
   </ul>
+  <button class="hamburger" id="burger" onclick="toggleMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- MOBILE DRAWER -->
@@ -1154,7 +1228,7 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
   <div class="footer-grid">
     <div class="footer-brand">
       <img src="Biryani_pot_Logo.png" alt="Biryani Pot">
-      <p>Authentic Hyderabadi &amp; Vijayawada biryani, slow-cooked with devotion and served fresh daily in Brentwood, California.</p>
+      <p>Authentic Hyderabadi &amp; Vijayawada biryani, slow-cooked with devotion and served fresh daily in Brentwood.</p>
     </div>
     <div class="footer-col">
       <h4>Navigate</h4>
