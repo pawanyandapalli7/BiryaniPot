@@ -154,9 +154,9 @@ body.light-theme .nav-logo-sub{ color:rgba(122,15,29,0.5); }
 ══════════════════════════════════════ */
 .hero{
   min-height:auto;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;align-items:center;
   text-align:center;
-  padding:20px 0 80px;
+  padding:0 0 80px;
   position:relative;overflow:hidden;
 }
 /* layered background */
@@ -175,6 +175,7 @@ body.light-theme .nav-logo-sub{ color:rgba(122,15,29,0.5); }
 .hero-inner{
   position:relative;z-index:2;
   max-width:700px;width:100%;
+  padding:2.5rem 6% 0;
   animation:heroIn 1.1s cubic-bezier(.22,1,.36,1) both;
   display:flex;flex-direction:column;align-items:center;
 }
@@ -1462,6 +1463,31 @@ body.light-theme .hero-welcome{ color:#1A0810; }
 }
 body.light-theme .hero-tagline{ color:var(--maroon); }
 
+
+/* ── Hero logo banner — full bleed ── */
+.hero-logo-banner{
+  width:100%;
+  overflow:hidden;
+  position:relative;
+  background:var(--offblack);
+  margin-bottom:0;
+}
+.hero-logo-banner img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+}
+/* dark fade at bottom of banner */
+.hero-logo-banner::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;
+  height:60px;
+  background:linear-gradient(to bottom, transparent, var(--black));
+  pointer-events:none;
+}
+
 </style>
 </head>
 <body>
@@ -1506,11 +1532,17 @@ body.light-theme .hero-tagline{ color:var(--maroon); }
   <div class="hero-bg"></div>
   <div class="hero-grain"></div>
 
+  <!-- Full-bleed logo banner -->
+  <div class="hero-logo-banner">
+    <img src="Biryani_pot_Logo.png" alt="Biryani Pot"
+         onerror="this.parentElement.style.display='none'">
+  </div>
+
+  <!-- Content below -->
   <div class="hero-inner">
-    <img class="hero-logo-img" src="Biryani_pot_Logo.png" alt="Biryani Pot"
-         onerror="this.style.display='none'">
     <p class="hero-tagline-sub">Authentic Indian Cuisine in Brentwood</p>
-    <h1 class="hero-welcome">Welcome to<br><em>Biryani Pot</em> Brentwood</h1>
+    <h1 class="hero-welcome">Welcome to <em>Biryani Pot</em> Brentwood</h1>
+    <p class="hero-tagline">Authentic Indian Cuisine</p>
     <p class="hero-desc">At Biryani Pot, we bring the rich, layered flavors of Hyderabadi and Vijayawada cuisine to the heart of Brentwood — slow-cooked with devotion, served fresh daily.</p>
     <div class="hero-actions">
       <a class="btn-primary" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">
