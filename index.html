@@ -65,15 +65,39 @@ nav.scrolled{
   border-bottom-color:rgba(212,175,55,0.15);
   backdrop-filter:blur(12px);
 }
+
+/* Logo absolutely centered */
+.nav-logo{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;
+  text-decoration:none;
+}
 .nav-logo img{
   height:48px;width:auto;
   display:block;
   transition:height .3s ease;
 }
-nav.scrolled .nav-logo img{height:40px;}
+nav.scrolled .nav-logo img{height:36px;}
+.nav-logo-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.nav-logo-sub{
+  font-family:var(--sans);
+  font-size:0.62rem;font-weight:400;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(212,175,55,0.85);
+  line-height:1;
+  white-space:nowrap;
+  transition:opacity .3s;
+}
+nav.scrolled .nav-logo-sub{ opacity:0; height:0; overflow:hidden; }
+body.light-theme .nav-logo-sub{ color:rgba(122,15,29,0.5); }
+
+/* Links on the right */
 .nav-links{
-  display:flex;align-items:center;gap:2.8rem;
+  display:flex;align-items:center;gap:2.4rem;
   list-style:none;
+  margin-left:auto;
 }
 .nav-links a{
   font-family:var(--sans);
@@ -98,13 +122,32 @@ nav.scrolled .nav-logo img{height:40px;}
   letter-spacing:0.15em !important;text-transform:uppercase !important;
   color:var(--black) !important;
   background:var(--gold) !important;
-  padding:11px 24px !important;
+  padding:10px 22px !important;
   border-radius:1px;
   text-decoration:none !important;
-  transition:background .2s, transform .15s !important;
+  transition:background .2s,transform .15s !important;
 }
 .nav-order::after{display:none !important;}
 .nav-order:hover{background:var(--gold-light) !important;transform:translateY(-1px);}
+
+/* Hamburger — hidden desktop, right side mobile */
+.hamburger{
+  display:none;
+  flex-direction:column;justify-content:center;gap:5px;
+  cursor:pointer;padding:6px;
+  background:transparent !important;border:none !important;
+  outline:none !important;-webkit-appearance:none;appearance:none;
+  -webkit-tap-highlight-color:transparent;-moz-appearance:none;
+  z-index:1001;width:36px;box-shadow:none !important;
+}
+.hamburger span{
+  display:block;width:22px;height:2px;
+  background:var(--gold);border-radius:2px;
+  transition:all .3s ease;flex-shrink:0;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* ══════════════════════════════════════
    HERO
@@ -434,10 +477,7 @@ nav.scrolled .nav-logo img{height:40px;}
   background:var(--maroon);
   color:var(--beige);
 }
-.menu-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
-  gap:1px;background:rgba(212,175,55,0.07);
-}
+.menu-grid{display:flex;flex-direction:column;gap:0;border:1px solid rgba(212,175,55,0.08);overflow:hidden;}
 .mitem{
   background:var(--panel);
   padding:2rem 2.2rem;
@@ -779,8 +819,11 @@ footer{
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;}
   .hero-right{min-height:55vw;}
-  .hero-left{padding:130px 5% 60px;}
-  .nav-links{display:none;}
+  .hero-left{padding:120px 5% 60px;}
+  .nav-bottom{display:none !important;}
+  .nav-hamburger-wrap{display:block !important;}
+  .nav-links{display:none !important;}
+  .nav-order{display:none !important;}
   .spec-grid{grid-template-columns:1fr 1fr;}
   .hours-grid{grid-template-columns:1fr;}
   .hours-row:nth-child(odd){padding-right:0;border-right:none;}
@@ -903,7 +946,7 @@ body.light-theme .spec-num { color: rgba(122,15,29,0.15); }
 body.light-theme .spec-name { color: #1A0810; }
 body.light-theme .spec-desc { color: rgba(26,8,16,0.6); }
 body.light-theme .menu-section { background: #EDE8DF; }
-body.light-theme .menu-grid { background: rgba(122,15,29,0.07); }
+body.light-theme .menu-grid { background: rgba(122,15,29,0.04); border-color:rgba(122,15,29,0.1); }
 body.light-theme .mitem { background: #F5F0E8; }
 body.light-theme .mitem:hover { background: #EDE8DF; }
 body.light-theme .mitem-name { color: #1A0810; }
@@ -977,13 +1020,25 @@ body.light-theme .theme-toggle .icon-light { display: block; }
 /* Hamburger */
 .hamburger{
   display:none;
+  -webkit-tap-highlight-color:transparent;
+  -moz-appearance:none;
   flex-direction:column;justify-content:center;gap:5px;
-  cursor:pointer;padding:6px;background:none;border:none;z-index:1001;
+  cursor:pointer;
+  padding:6px;
+  background:transparent !important;
+  border:none !important;
+  outline:none !important;
+  -webkit-appearance:none;
+  appearance:none;
+  z-index:1001;
+  width:36px;
+  box-shadow:none !important;
 }
 .hamburger span{
   display:block;width:22px;height:2px;
   background:var(--gold);border-radius:2px;
   transition:all .3s ease;
+  flex-shrink:0;
 }
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
@@ -1133,7 +1188,6 @@ body.light-theme .theme-toggle .icon-light { display: block; }
     font-size:0.68rem !important;
     border-bottom:1px solid rgba(212,175,55,0.2) !important;
   }
-  .menu-grid{grid-template-columns:1fr !important;gap:1px;}
   .mitem{padding:1.4rem 1.2rem !important;}
 
   /* LOCATION */
@@ -1160,11 +1214,6 @@ body.light-theme .theme-toggle .icon-light { display: block; }
   .footer-brand p{max-width:100% !important;}
 
   /* FLOAT + THEME */
-  .float-cta{bottom:1.2rem !important;right:1.2rem !important;width:76px !important;height:76px !important;}
-  .float-cta .nav-orbit-outer{width:76px !important;height:76px !important;}
-  .float-cta .nav-orbit-inner{width:62px !important;height:62px !important;}
-  .float-cta .nav-border-ring{width:52px !important;height:52px !important;}
-  .theme-toggle{bottom:1.2rem !important;left:1.2rem !important;width:40px !important;height:40px !important;}
 
   /* GENERAL */
   .sec-title{font-size:clamp(1.8rem,6vw,2.6rem) !important;line-height:1.1 !important;}
@@ -1267,9 +1316,9 @@ body.light-theme .cmenu-tag  { border-color: rgba(122,15,29,0.3); color: var(--m
 body.light-theme .offer-badge{ border-color: rgba(122,15,29,0.3); color: var(--maroon); }
 body.light-theme .offer-ribbon{ background: var(--maroon); color: #F5E6C8; }
 body.light-theme .offer-card::before { background: linear-gradient(to right, var(--maroon), transparent); }
-body.light-theme .menu-grid  { background: rgba(122,15,29,0.08); }
-body.light-theme .mitem      { background: #ECEAE0; }
-body.light-theme .mitem:hover{ background: #E2DDD4; }
+body.light-theme .menu-grid { background: rgba(122,15,29,0.04); }
+body.light-theme .mitem { background: #ECEAE0; }
+body.light-theme .mitem:hover { background: #E2DDD4; }
 body.light-theme .mitem-price{ color: var(--maroon); }
 body.light-theme .mitem-name { color: #1A0810; }
 body.light-theme .mitem-desc { color: rgba(26,8,16,0.6); }
@@ -1333,16 +1382,97 @@ body.light-theme .mob-drawer a:active { color: var(--maroon); }
 body.light-theme .mob-drawer-close { color: var(--maroon); }
 body.light-theme .mob-drawer-close:hover { color: #1A0810; }
 
+
+/* Float CTA — always bottom right, never overlaps text */
+@media(max-width:768px){
+  .float-cta{
+    bottom:1.5rem !important;
+    right:1rem !important;
+    width:70px !important;
+    height:70px !important;
+    opacity:0.92;
+  }
+  .float-cta .nav-orbit-outer{width:70px !important;height:70px !important;}
+  .float-cta .nav-orbit-inner{width:58px !important;height:58px !important;}
+  .float-cta .nav-border-ring{width:48px !important;height:48px !important;}
+}
+
+
+/* ══ FULL MENU IMAGE ══ */
+.menu-header{
+  padding:80px 5% 40px;
+  text-align:center;
+}
+.menu-header .gold-rule{
+  margin:1rem auto;
+}
+.menu-img-wrap{
+  position:relative;
+  max-width:900px;
+  margin:0 auto;
+  padding:0 5% 80px;
+}
+.menu-full-img{
+  width:100%;
+  height:auto;
+  display:block;
+  border:1px solid rgba(212,175,55,0.15);
+}
+.menu-img-overlay{
+  text-align:center;
+  margin-top:2.5rem;
+}
+body.light-theme .menu-section { background: #EDE8DF; }
+body.light-theme .menu-full-img { border-color:rgba(122,15,29,0.15); }
+@media(max-width:768px){
+  .menu-header{ padding:60px 5% 30px; }
+  .menu-img-wrap{ padding:0 4% 60px; }
+}
+
+
+/* Hero welcome heading */
+.hero-welcome{
+  font-family:var(--serif);
+  font-size:clamp(1.4rem, 3vw, 2rem);
+  font-weight:300;
+  color:var(--beige);
+  line-height:1.3;
+  letter-spacing:0.02em;
+  margin:0.8rem 0 0;
+}
+.hero-welcome em{
+  font-style:italic;
+  color:var(--gold);
+}
+body.light-theme .hero-welcome{ color:#1A0810; }
+
+
+/* Hero tagline */
+.hero-tagline{
+  font-family:var(--serif2);
+  font-size:clamp(1rem, 2vw, 1.25rem);
+  font-weight:300;
+  font-style:italic;
+  color:var(--gold-light);
+  letter-spacing:0.08em;
+  margin:0.5rem 0 0;
+  line-height:1.4;
+}
+body.light-theme .hero-tagline{ color:var(--maroon); }
+
 </style>
 </head>
 <body>
 
 <!-- ══ NAV ══ -->
 <nav id="nav">
-  <a class="nav-logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><img src="Biryani_pot_Logo.png" alt="Biryani Pot Brentwood"></a>
-  <button class="hamburger" id="burger" onclick="toggleMob()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a class="nav-logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <div class="nav-logo-wrap">
+      <img src="Biryani_pot_Logo.png" alt="Biryani Pot Brentwood" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="logo-fallback" style="display:none;font-family:var(--serif);font-size:1.3rem;color:var(--gold);letter-spacing:0.05em;">Biryani Pot</span>
+      <span class="nav-logo-sub">Brentwood</span>
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#menu">Menu</a></li>
@@ -1351,6 +1481,9 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     <li><a href="promotions.html">Promotions</a></li>
     <li><a class="nav-order" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">Order Now</a></li>
   </ul>
+  <button class="hamburger" id="burger" onclick="toggleMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- MOBILE DRAWER -->
@@ -1374,11 +1507,10 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
   <div class="hero-grain"></div>
 
   <div class="hero-inner">
-    <div class="hero-eyebrow">Brentwood, California</div>
     <img class="hero-logo-img" src="Biryani_pot_Logo.png" alt="Biryani Pot">
+    <h1 class="hero-welcome">Welcome to <em>Biryani Pot</em> Brentwood</h1>
     <p class="hero-tagline">
-      <strong>Slow-cooked. Richly spiced. Deeply soulful.</strong><br>
-      Authentic Hyderabadi &amp; Vijayawada cuisine, crafted fresh daily in the heart of Brentwood.
+      Authentic Indian Cuisine
     </p>
     <div class="hero-actions">
       <a class="btn-primary" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">
@@ -1509,7 +1641,7 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     <span>Hyderabadi Dum Biryani</span><span class="dot">✦</span>
     <span>Open 7 Days</span><span class="dot">✦</span>
     <span>Vijayawada Mutton</span><span class="dot">✦</span>
-    <span>Brentwood, California</span><span class="dot">✦</span>
+    <span>Brentwood</span><span class="dot">✦</span>
     <span>Catering Available</span><span class="dot">✦</span>
     <span>Authentic South &amp; North Indian Cuisine</span><span class="dot">✦</span>
     <span>Fresh Daily</span><span class="dot">✦</span>
@@ -1517,7 +1649,7 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     <span>Hyderabadi Dum Biryani</span><span class="dot">✦</span>
     <span>Open 7 Days</span><span class="dot">✦</span>
     <span>Vijayawada Mutton</span><span class="dot">✦</span>
-    <span>Brentwood, California</span><span class="dot">✦</span>
+    <span>Brentwood</span><span class="dot">✦</span>
     <span>Catering Available</span><span class="dot">✦</span>
     <span>Authentic South &amp; North Indian Cuisine</span><span class="dot">✦</span>
     <span>Fresh Daily</span><span class="dot">✦</span>
@@ -1527,111 +1659,19 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
 <!-- ══ MENU ══ -->
 <section class="menu-section" id="menu">
   <div class="menu-header">
-    <div class="eyebrow" style="text-align:center">Our Menu</div>
-    <h2 class="sec-title" style="text-align:center">Crafted with <em>Soul</em></h2>
-    <div class="gold-rule" style="margin:1.4rem auto;"></div>
+    <div class="eyebrow">What We Serve</div>
+    <h2 class="sec-title">Our <em>Menu</em></h2>
+    <div class="gold-rule"></div>
   </div>
-  <div class="menu-tabs">
-    <button class="tab active" onclick="filterMenu('all',this)">All</button>
-    <button class="tab" onclick="filterMenu('biryani',this)">Biryanis</button>
-    <button class="tab" onclick="filterMenu('starter',this)">Starters</button>
-    <button class="tab" onclick="filterMenu('main',this)">Mains</button>
-    <button class="tab" onclick="filterMenu('veg',this)">Vegetarian</button>
-    <button class="tab" onclick="filterMenu('dessert',this)">Desserts &amp; Drinks</button>
-  </div>
-  <div class="menu-grid" id="menuGrid">
 
-    <div class="mitem show" data-c="biryani">
-      <div class="mitem-top"><div class="mitem-name">Hyderabadi Chicken Dum Biryani</div><div class="mitem-price">$13.99</div></div>
-      <div class="mitem-desc">Slow-cooked in sealed handi with saffron, caramelized onions &amp; whole spices</div>
-      <span class="spec-badge badge-sig">Signature</span>
+  <div class="menu-img-wrap">
+    <img src="menu.jpg" alt="Biryani Pot Full Menu" class="menu-full-img"
+         onerror="this.parentElement.style.display='none'">
+    <div class="menu-img-overlay">
+      <a class="btn-primary" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">
+        Order Online
+      </a>
     </div>
-    <div class="mitem show" data-c="biryani">
-      <div class="mitem-top"><div class="mitem-name">Vijayawada Mutton Biryani</div><div class="mitem-price">$14.99</div></div>
-      <div class="mitem-desc">Andhra-style fiery mutton biryani with bold masala and aromatic rice</div>
-      <span class="spec-badge badge-spicy">Spicy</span>
-    </div>
-    <div class="mitem show" data-c="biryani">
-      <div class="mitem-top"><div class="mitem-name">Amaravathi Chicken Biryani</div><div class="mitem-price">$13.99</div></div>
-      <div class="mitem-desc">Coastal Andhra recipe with distinct spice blend and juicy chicken</div>
-      <span class="spec-badge badge-spicy">Spicy</span>
-    </div>
-    <div class="mitem show" data-c="biryani veg">
-      <div class="mitem-top"><div class="mitem-name">Paneer Biryani</div><div class="mitem-price">$12.99</div></div>
-      <div class="mitem-desc">Creamy paneer layered with Hyderabadi spiced basmati rice</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-    <div class="mitem show" data-c="biryani veg">
-      <div class="mitem-top"><div class="mitem-name">Veg Dum Biryani</div><div class="mitem-price">$11.99</div></div>
-      <div class="mitem-desc">Garden-fresh vegetables dum-cooked with aromatic basmati and whole spices</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-    <div class="mitem show" data-c="biryani">
-      <div class="mitem-top"><div class="mitem-name">Egg Biryani</div><div class="mitem-price">$12.99</div></div>
-      <div class="mitem-desc">Whole boiled eggs nestled in spiced, fragrant basmati rice</div>
-    </div>
-
-    <div class="mitem show" data-c="starter">
-      <div class="mitem-top"><div class="mitem-name">Chicken Tikka</div><div class="mitem-price">$13.99</div></div>
-      <div class="mitem-desc">Tandoor-grilled marinated chicken with fresh mint chutney</div>
-      <span class="spec-badge badge-sig">Fan Favourite</span>
-    </div>
-    <div class="mitem show" data-c="starter">
-      <div class="mitem-top"><div class="mitem-name">Chicken Masakali</div><div class="mitem-price">$13.99</div></div>
-      <div class="mitem-desc">Crispy fried chicken tossed in a bold signature masala sauce</div>
-    </div>
-    <div class="mitem show" data-c="starter veg">
-      <div class="mitem-top"><div class="mitem-name">Gobi Manchurian</div><div class="mitem-price">$11.99</div></div>
-      <div class="mitem-desc">Crispy cauliflower in tangy Indo-Chinese manchurian glaze</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-    <div class="mitem show" data-c="starter veg">
-      <div class="mitem-top"><div class="mitem-name">Pani Puri</div><div class="mitem-price">$7.99</div></div>
-      <div class="mitem-desc">Street-style crispy puris with tangy tamarind water (weekends)</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-    <div class="mitem show" data-c="starter">
-      <div class="mitem-top"><div class="mitem-name">Tandoori Chicken Leg</div><div class="mitem-price">$4.99</div></div>
-      <div class="mitem-desc">Whole chicken leg with classic tandoor marinade and char</div>
-    </div>
-
-    <div class="mitem show" data-c="main">
-      <div class="mitem-top"><div class="mitem-name">Butter Chicken</div><div class="mitem-price">$14.99</div></div>
-      <div class="mitem-desc">Tandoor-charred chicken in rich tomato-cream gravy with fenugreek</div>
-      <span class="spec-badge badge-sig">Best Seller</span>
-    </div>
-    <div class="mitem show" data-c="main veg">
-      <div class="mitem-top"><div class="mitem-name">Paneer Butter Masala</div><div class="mitem-price">$13.99</div></div>
-      <div class="mitem-desc">Cottage cheese in velvety tomato and cashew gravy</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-    <div class="mitem show" data-c="main">
-      <div class="mitem-top"><div class="mitem-name">Garlic Naan</div><div class="mitem-price">$3.49</div></div>
-      <div class="mitem-desc">Fluffy tandoor-baked flatbread with roasted garlic butter</div>
-    </div>
-    <div class="mitem show" data-c="main">
-      <div class="mitem-top"><div class="mitem-name">Plain Basmati Rice</div><div class="mitem-price">$2.99</div></div>
-      <div class="mitem-desc">Steamed long-grain basmati to accompany any curry</div>
-    </div>
-
-    <div class="mitem show" data-c="dessert">
-      <div class="mitem-top"><div class="mitem-name">Mango Lassi</div><div class="mitem-price">$4.99</div></div>
-      <div class="mitem-desc">Chilled yogurt blended with sweet Alphonso mango</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-    <div class="mitem show" data-c="dessert">
-      <div class="mitem-top"><div class="mitem-name">Gulab Jamun</div><div class="mitem-price">$5.99</div></div>
-      <div class="mitem-desc">Warm milk-solid dumplings in rose-cardamom syrup</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-    <div class="mitem show" data-c="dessert">
-      <div class="mitem-top"><div class="mitem-name">Kheer</div><div class="mitem-price">$4.99</div></div>
-      <div class="mitem-desc">Rice pudding with saffron, pistachios and almonds</div>
-      <span class="spec-badge badge-veg">Vegetarian</span>
-    </div>
-  </div>
-  <div class="menu-cta">
-    <a class="btn-primary" href="https://order.toasttab.com/online/biryani-pot-3130-balfour-road" target="_blank">View Full Menu &amp; Order Online</a>
   </div>
 </section>
 
@@ -1750,7 +1790,7 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
   <div class="footer-grid">
     <div class="footer-brand">
       <img src="Biryani_pot_Logo.png" alt="Biryani Pot">
-      <p>Authentic Hyderabadi &amp; Vijayawada biryani, slow-cooked with devotion and served fresh daily in Brentwood, California.</p>
+      <p>Authentic Hyderabadi &amp; Vijayawada biryani, slow-cooked with devotion and served fresh daily in Brentwood.</p>
     </div>
     <div class="footer-col">
       <h4>Navigate</h4>
