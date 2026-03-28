@@ -1511,6 +1511,48 @@ body.light-theme .hero-scroll-line{ background:linear-gradient(to bottom,rgba(12
 body.light-theme .btn-secondary{ color:#1A0810; border-color:rgba(26,8,16,0.3); }
 body.light-theme .btn-secondary:hover{ border-color:var(--maroon); color:var(--maroon); }
 
+
+/* Hero order platforms */
+.hero-order-platforms{
+  margin-top:1.8rem;
+  display:flex;flex-direction:column;align-items:center;gap:0.8rem;
+  width:100%;
+}
+.hero-also-on{
+  font-family:var(--sans);
+  font-size:0.58rem;font-weight:400;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:rgba(245,230,200,0.4);
+  display:flex;align-items:center;gap:0.8rem;
+}
+.hero-also-on::before,.hero-also-on::after{
+  content:'';display:block;width:40px;height:1px;
+  background:rgba(212,175,55,0.2);
+}
+.hero-delivery-row{
+  display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;
+}
+.hero-delivery-row a{
+  font-family:var(--sans);
+  font-size:0.65rem;font-weight:400;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:rgba(245,230,200,0.55);
+  text-decoration:none;
+  padding:7px 16px;
+  border:1px solid rgba(212,175,55,0.2);
+  border-radius:1px;
+  transition:color .2s,border-color .2s;
+}
+.hero-delivery-row a:hover{
+  color:var(--gold);
+  border-color:rgba(212,175,55,0.5);
+}
+body.light-theme .hero-also-on{ color:rgba(26,8,16,0.35); }
+body.light-theme .hero-also-on::before,
+body.light-theme .hero-also-on::after{ background:rgba(122,15,29,0.15); }
+body.light-theme .hero-delivery-row a{ color:rgba(26,8,16,0.5); border-color:rgba(26,8,16,0.15); }
+body.light-theme .hero-delivery-row a:hover{ color:var(--maroon); border-color:var(--maroon); }
+
 </style>
 </head>
 <body>
@@ -1573,6 +1615,16 @@ body.light-theme .btn-secondary:hover{ border-color:var(--maroon); color:var(--m
         Order Online
       </a>
       <a class="btn-secondary" href="#menu">Explore Menu</a>
+    </div>
+
+    <!-- Order platforms -->
+    <div class="hero-order-platforms">
+      <div class="hero-also-on">Also on</div>
+      <div class="hero-delivery-row">
+        <a href="https://www.doordash.com/store/32129185?utm_source=mx_share&aw=E0bfBi-cUMAL4YAX" target="_blank">DoorDash</a>
+        <a href="https://www.ubereats.com/store-browse-uuid/f2e06469-d7c0-4b18-9dc2-c610e9722832?diningMode=DELIVERY" target="_blank">Uber Eats</a>
+        <a href="https://direct.chownow.com/order/41750/locations" target="_blank">ChowNow</a>
+      </div>
     </div>
   </div>
 
