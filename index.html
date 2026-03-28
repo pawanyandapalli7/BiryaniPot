@@ -56,14 +56,17 @@ nav {
   padding:0 5%;
   display:flex;align-items:center;justify-content:space-between;
   height:80px;
-  transition:height .4s ease, background .4s ease, border-color .4s ease;
-  border-bottom:1px solid transparent;
+  background:rgba(12,12,12,0.96);
+  border-bottom:1px solid rgba(212,175,55,0.12);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  transition:height .4s ease, background .4s ease, border-color .4s ease, box-shadow .4s ease;
 }
 nav.scrolled{
   height:64px;
-  background:rgba(18,18,18,0.97);
-  border-bottom-color:rgba(212,175,55,0.15);
-  backdrop-filter:blur(12px);
+  background:rgba(8,8,8,0.99);
+  border-bottom-color:rgba(212,175,55,0.2);
+  box-shadow:0 2px 20px rgba(0,0,0,0.5);
 }
 
 /* Logo absolutely centered */
@@ -1352,12 +1355,14 @@ body.light-theme .nav-links a { color: rgba(26,8,16,0.65); }
 
 /* ── Light theme nav fixes ── */
 body.light-theme nav {
-  background: rgba(245,240,232,0.97);
+  background: rgba(255,255,255,0.97);
   border-bottom-color: rgba(122,15,29,0.12);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
 }
 body.light-theme nav.scrolled {
-  background: rgba(245,240,232,0.98);
+  background: rgba(255,255,255,0.99);
   border-bottom-color: rgba(122,15,29,0.2);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
 }
 body.light-theme .nav-links a { color: rgba(26,8,16,0.6); }
 body.light-theme .nav-links a:hover { color: #1A0810; }
