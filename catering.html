@@ -1075,13 +1075,84 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
   .float-cta .nav-border-ring{width:48px !important;height:48px !important;}
 }
 
+
+/* ══ CATERING SPECIALTIES ══ */
+.cat-spec{
+  padding:90px 5%;
+  background:var(--offblack);
+  border-top:1px solid rgba(212,175,55,0.08);
+}
+.cat-spec-header{
+  max-width:860px;
+  margin:0 auto 4rem;
+  text-align:center;
+}
+.cat-spec-title{
+  font-family:var(--serif);
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:300;
+  color:var(--white);
+  margin-bottom:1.2rem;
+}
+.cat-spec-desc{
+  font-family:var(--serif2);
+  font-size:1rem;font-weight:300;line-height:1.9;
+  color:rgba(245,230,200,0.55);
+  max-width:800px;margin:0 auto;
+}
+.cat-spec-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2.5rem;
+  max-width:1200px;
+  margin:0 auto;
+}
+.cat-spec-card{ display:flex;flex-direction:column; }
+.cat-spec-img{
+  width:100%;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:var(--panel);
+}
+.cat-spec-img img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  display:block;
+  transition:transform .5s ease;
+}
+.cat-spec-card:hover .cat-spec-img img{ transform:scale(1.04); }
+.cat-spec-info{
+  padding:1.4rem 0 0;
+}
+.cat-spec-info h3{
+  font-family:var(--serif);
+  font-size:1.3rem;font-weight:400;
+  color:var(--white);
+  margin-bottom:0.6rem;
+}
+.cat-spec-info p{
+  font-family:var(--serif2);
+  font-size:0.88rem;font-weight:300;line-height:1.8;
+  color:rgba(245,230,200,0.5);
+}
+/* Light theme */
+body.light-theme .cat-spec{ background:#F5F0E8; border-top-color:rgba(122,15,29,0.08); }
+body.light-theme .cat-spec-title{ color:#1A0810; }
+body.light-theme .cat-spec-desc{ color:rgba(26,8,16,0.6); }
+body.light-theme .cat-spec-info h3{ color:#1A0810; }
+body.light-theme .cat-spec-info p{ color:rgba(26,8,16,0.55); }
+@media(max-width:768px){
+  .cat-spec-grid{ grid-template-columns:1fr; gap:3rem; }
+  .cat-spec{ padding:60px 5%; }
+}
+
 </style>
 </head>
 <body>
 
 
 <nav id="nav">
-  <a class="nav-logo" href="index.html" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+  <a class="nav-logo" href="index.html">
     <div class="nav-logo-wrap">
       <img src="Biryani_pot_Logo.png" alt="Biryani Pot Brentwood" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
       <span class="logo-fallback" style="display:none;font-family:var(--serif);font-size:1.3rem;color:var(--gold);letter-spacing:0.05em;">Biryani Pot</span>
@@ -1124,7 +1195,6 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
     <p class="hero-sub">From intimate family gatherings to grand celebrations — Biryani Pot delivers the full experience of authentic Indian cuisine to your event, fresh and unforgettable.</p>
     <div class="hero-btns">
       <a class="btn-primary" href="#inquiry">Request Catering</a>
-      <a class="btn-secondary" href="#menu-highlight">View Catering Menu</a>
     </div>
   </div>
 </section>
@@ -1190,38 +1260,62 @@ body.light-theme .mob-drawer-close:hover { color: #1A0810; }
   </div>
   <div class="why-features">
     <div class="feature">
-      <div class="feature-num">01</div>
       <div class="feature-body">
         <div class="feature-title">Cooked Fresh on the Day</div>
         <div class="feature-desc">Every dish is prepared fresh for your event — never pre-made or reheated. Your guests taste the difference.</div>
       </div>
     </div>
     <div class="feature">
-      <div class="feature-num">02</div>
       <div class="feature-body">
         <div class="feature-title">Customizable Menus</div>
         <div class="feature-desc">Mix and match from our full menu. We accommodate dietary preferences, spice levels, and special requests.</div>
       </div>
     </div>
     <div class="feature">
-      <div class="feature-num">03</div>
       <div class="feature-body">
         <div class="feature-title">Any Scale, Any Size</div>
         <div class="feature-desc">From 20 guests to 500+, we scale seamlessly without ever compromising on quality or presentation.</div>
       </div>
     </div>
     <div class="feature">
-      <div class="feature-num">04</div>
       <div class="feature-body">
         <div class="feature-title">On-Time, Every Time</div>
         <div class="feature-desc">We understand events run on schedules. Reliable delivery and setup so you have one less thing to worry about.</div>
       </div>
     </div>
     <div class="feature">
-      <div class="feature-num">05</div>
       <div class="feature-body">
         <div class="feature-title">Serving &amp; Setup Available</div>
         <div class="feature-desc">Full setup and serving staff available upon request for a seamless, white-glove catering experience.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATERING SPECIALTIES -->
+<section class="cat-spec">
+  <div class="cat-spec-header">
+    <h2 class="cat-spec-title">Catering Specialties</h2>
+    <p class="cat-spec-desc">We offer a thoughtfully curated range of catering options designed to meet every occasion with elegance and flavor. Our goal is to delight the palate and leave your guests with a memorable dining experience. Each catering package is fully customizable — from authentic and traditional to refined corporate or effortlessly elegant celebrations. You choose the vision; we deliver it with excellence.</p>
+  </div>
+
+  <div class="cat-spec-grid">
+    <div class="cat-spec-card">
+      <div class="cat-spec-img">
+        <img src="panipuri.jpg" alt="On-Site Pani Puri Experience" loading="lazy" onerror="this.parentElement.style.background='var(--panel)'">
+      </div>
+      <div class="cat-spec-info">
+        <h3>On-Site Pani Puri Experience</h3>
+        <p>A vibrant, interactive street food station featuring crispy puris filled with spiced potatoes and chickpeas, served with tangy tamarind water and zesty mint chutney. A crowd favourite that brings the energy of Indian street food straight to your event.</p>
+      </div>
+    </div>
+    <div class="cat-spec-card">
+      <div class="cat-spec-img">
+        <img src="Dosa.jpg" alt="Live Dosa Corner" loading="lazy" onerror="this.parentElement.style.background='var(--panel)'">
+      </div>
+      <div class="cat-spec-info">
+        <h3>Live Dosa Corner</h3>
+        <p>Freshly prepared dosas served hot from the griddle, including Plain Dosa, Masala Dosa, Onion Chilli Dosa, and more. Served with coconut chutney and sambar — a live cooking experience your guests will love.</p>
       </div>
     </div>
   </div>
