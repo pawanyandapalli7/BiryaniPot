@@ -1338,40 +1338,63 @@ function toggleTheme(){
     const grid    = document.getElementById('driveGrid');
 
     try {
-      const url  = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'image/'+and+trashed=false&fields=files(id,name)&orderBy=createdTime+desc&key=${API_KEY}`;
+      // First make folder contents public-readable
+      const url = 'https://www.googleapis.com/drive/v3/files'
+        + '?q=' + encodeURIComponent("'" + FOLDER_ID + "' in parents and trashed=false")
+        + '&fields=files(id,name,mimeType)'
+        + '&supportsAllDrives=true'
+        + '&includeItemsFromAllDrives=true'
+        + '&key=' + API_KEY;
+
       const res  = await fetch(url);
       const data = await res.json();
 
+      console.log('Drive API response:', JSON.stringify(data));
+
       loading.style.display = 'none';
 
-      if (!data.files || data.files.length === 0) {
+      if (data.error) {
+        console.error('API error:', data.error);
+        empty.style.display = 'block';
+        empty.querySelector('p').textContent = 'Error: ' + data.error.message;
+        return;
+      }
+
+      // Filter images only
+      const images = (data.files || []).filter(f =>
+        f.mimeType && f.mimeType.startsWith('image/')
+      );
+
+      console.log('Images found:', images.length);
+
+      if (images.length === 0) {
         empty.style.display = 'block';
         return;
       }
 
       grid.style.display = 'grid';
-      data.files.forEach((file, i) => {
+      images.forEach((file, i) => {
         const card  = document.createElement('div');
         card.className = 'drive-card';
-        card.style.cssText = 'opacity:0;transform:translateY(20px);transition:opacity 0.5s ease ' + (i*0.08) + 's,transform 0.5s ease ' + (i*0.08) + 's;';
+        card.style.cssText = 'opacity:0;transform:translateY(20px);transition:opacity 0.5s ease ' + (i*0.1) + 's,transform 0.5s ease ' + (i*0.1) + 's;';
         const label = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
-        card.innerHTML = `
-          <img src="https://drive.google.com/thumbnail?id=${file.id}&sz=w800"
-               alt="${label}" loading="lazy"
-               onerror="this.parentElement.style.display='none'">
-          <div class="drive-card-name">${label}</div>
-        `;
+        // Use uc export for direct image display
+        const imgSrc = 'https://drive.google.com/thumbnail?id=' + file.id + '&sz=w800&authuser=0';
+        card.innerHTML =
+          '<img src="' + imgSrc + '" alt="' + label + '" loading="lazy" ' +
+          'onerror="this.src='https://lh3.googleusercontent.com/d/' + '"+file.id+'=w800'">' +
+          '<div class="drive-card-name">' + label + '</div>';
         grid.appendChild(card);
         setTimeout(() => {
           card.style.opacity = '1';
           card.style.transform = 'translateY(0)';
-        }, 100 + i * 80);
+        }, 100 + i * 100);
       });
 
     } catch(err) {
+      console.error('Drive sync error:', err);
       loading.style.display = 'none';
       empty.style.display = 'block';
-      console.warn('Drive sync error:', err);
     }
   }
 
