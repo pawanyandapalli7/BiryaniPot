@@ -1326,10 +1326,11 @@ function toggleTheme(){
 </button>
 <script>
 
+<script>
 /* ══ GOOGLE DRIVE AUTO SYNC ══ */
 (function() {
   const FOLDER_ID = '17EISZPp7bb0TLUDR4KgRhFJm7hi1MXCq';
-  const API_KEY   = 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'; // public read-only key
+  const API_KEY   = 'AIzaSyDW4KFIg_XgD4qfaba9MLAzKfHVM9ddaU0';
 
   async function loadPromos() {
     const loading = document.getElementById('driveLoading');
@@ -1337,7 +1338,7 @@ function toggleTheme(){
     const grid    = document.getElementById('driveGrid');
 
     try {
-      const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'image/'&fields=files(id,name)&key=${API_KEY}`;
+      const url  = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'image/'+and+trashed=false&fields=files(id,name)&orderBy=createdTime+desc&key=${API_KEY}`;
       const res  = await fetch(url);
       const data = await res.json();
 
@@ -1349,33 +1350,33 @@ function toggleTheme(){
       }
 
       grid.style.display = 'grid';
-      data.files.forEach(file => {
-        const card = document.createElement('div');
+      data.files.forEach((file, i) => {
+        const card  = document.createElement('div');
         card.className = 'drive-card';
-
-        // Clean filename for display (remove extension)
+        card.style.cssText = 'opacity:0;transform:translateY(20px);transition:opacity 0.5s ease ' + (i*0.08) + 's,transform 0.5s ease ' + (i*0.08) + 's;';
         const label = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
-
         card.innerHTML = `
-          <img src="https://drive.google.com/thumbnail?id=${file.id}&sz=w600"
-               alt="${label}"
-               loading="lazy"
+          <img src="https://drive.google.com/thumbnail?id=${file.id}&sz=w800"
+               alt="${label}" loading="lazy"
                onerror="this.parentElement.style.display='none'">
           <div class="drive-card-name">${label}</div>
         `;
         grid.appendChild(card);
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 100 + i * 80);
       });
 
     } catch(err) {
       loading.style.display = 'none';
       empty.style.display = 'block';
-      console.warn('Drive load failed:', err);
+      console.warn('Drive sync error:', err);
     }
   }
 
   loadPromos();
 })();
-
 </script>
 </body>
 </html>
