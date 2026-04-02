@@ -1327,73 +1327,75 @@ function toggleTheme(){
 <script>
 /* ══ GOOGLE DRIVE AUTO SYNC ══ */
 (function() {
-  const FOLDER_ID = '17EISZPp7bb0TLUDR4KgRhFJm7hi1MXCq';
-  const API_KEY   = 'AIzaSyDW4KFIg_XgD4qfaba9MLAzKfHVM9ddaU0';
+  var FOLDER_ID = '17EISZPp7bb0TLUDR4KgRhFJm7hi1MXCq';
+  var API_KEY   = 'AIzaSyDW4KFIg_XgD4qfaba9MLAzKfHVM9ddaU0';
 
-  async function loadPromos() {
-    const loading = document.getElementById('driveLoading');
-    const empty   = document.getElementById('driveEmpty');
-    const grid    = document.getElementById('driveGrid');
+  function loadPromos() {
+    var loading = document.getElementById('driveLoading');
+    var empty   = document.getElementById('driveEmpty');
+    var grid    = document.getElementById('driveGrid');
 
-    try {
-      // First make folder contents public-readable
-      const url = 'https://www.googleapis.com/drive/v3/files'
-        + '?q=' + encodeURIComponent("'" + FOLDER_ID + "' in parents and trashed=false")
-        + '&fields=files(id,name,mimeType)'
-        + '&supportsAllDrives=true'
-        + '&includeItemsFromAllDrives=true'
-        + '&key=' + API_KEY;
+    var url = 'https://www.googleapis.com/drive/v3/files'
+      + '?q=' + encodeURIComponent("'" + FOLDER_ID + "' in parents and trashed=false")
+      + '&fields=files(id,name,mimeType)'
+      + '&key=' + API_KEY;
 
-      const res  = await fetch(url);
-      const data = await res.json();
+    fetch(url)
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        loading.style.display = 'none';
+        console.log('Drive response:', data);
 
-      console.log('Drive API response:', JSON.stringify(data));
+        if (data.error) {
+          console.error('API error:', data.error.message);
+          empty.style.display = 'block';
+          return;
+        }
 
-      loading.style.display = 'none';
+        var images = (data.files || []).filter(function(f) {
+          return f.mimeType && f.mimeType.indexOf('image/') === 0;
+        });
 
-      if (data.error) {
-        console.error('API error:', data.error);
-        empty.style.display = 'block';
-        empty.querySelector('p').textContent = 'Error: ' + data.error.message;
-        return;
-      }
+        if (images.length === 0) {
+          empty.style.display = 'block';
+          return;
+        }
 
-      // Filter images only
-      const images = (data.files || []).filter(f =>
-        f.mimeType && f.mimeType.startsWith('image/')
-      );
+        grid.style.display = 'grid';
+        images.forEach(function(file, i) {
+          var card  = document.createElement('div');
+          card.className = 'drive-card';
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          card.style.transition = 'opacity 0.5s ease ' + (i * 0.1) + 's, transform 0.5s ease ' + (i * 0.1) + 's';
 
-      console.log('Images found:', images.length);
+          var img = document.createElement('img');
+          img.src     = 'https://drive.google.com/thumbnail?id=' + file.id + '&sz=w800';
+          img.alt     = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+          img.loading = 'lazy';
+          img.onerror = function() { this.parentElement.style.display = 'none'; };
 
-      if (images.length === 0) {
-        empty.style.display = 'block';
-        return;
-      }
+          var nameDiv = document.createElement('div');
+          nameDiv.className   = 'drive-card-name';
+          nameDiv.textContent = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
 
-      grid.style.display = 'grid';
-      images.forEach((file, i) => {
-        const card  = document.createElement('div');
-        card.className = 'drive-card';
-        card.style.cssText = 'opacity:0;transform:translateY(20px);transition:opacity 0.5s ease ' + (i*0.1) + 's,transform 0.5s ease ' + (i*0.1) + 's;';
-        const label = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
-        // Use uc export for direct image display
-        const imgSrc = 'https://drive.google.com/thumbnail?id=' + file.id + '&sz=w800&authuser=0';
-        card.innerHTML =
-          '<img src="' + imgSrc + '" alt="' + label + '" loading="lazy" ' +
-          'onerror="this.src='https://lh3.googleusercontent.com/d/' + '"+file.id+'=w800'">' +
-          '<div class="drive-card-name">' + label + '</div>';
-        grid.appendChild(card);
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, 100 + i * 100);
+          card.appendChild(img);
+          card.appendChild(nameDiv);
+          grid.appendChild(card);
+
+          setTimeout(function(c) {
+            return function() {
+              c.style.opacity   = '1';
+              c.style.transform = 'translateY(0)';
+            };
+          }(card), 100 + i * 100);
+        });
+      })
+      .catch(function(err) {
+        console.error('Drive sync error:', err);
+        loading.style.display = 'none';
+        empty.style.display   = 'block';
       });
-
-    } catch(err) {
-      console.error('Drive sync error:', err);
-      loading.style.display = 'none';
-      empty.style.display = 'block';
-    }
   }
 
   loadPromos();
